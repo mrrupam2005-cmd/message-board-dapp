@@ -2,10 +2,10 @@ let provider;
 let signer;
 let contract;
 
-// 🔴 এখানে তোমার deployed contract address বসাও
-const contractAddress = "PASTE_CONTRACT_ADDRESS_HERE";
+// Deployed MessageBoard contract address
+const contractAddress = "0x02Ca3B72C573056bA20420beada4d68962497dd8";
 
-// ✅ MessageBoard.sol ABI
+// MessageBoard.sol ABI
 const contractABI = [
   {
     "inputs": [
@@ -33,11 +33,6 @@ const contractABI = [
         "internalType": "address",
         "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -45,33 +40,27 @@ const contractABI = [
   }
 ];
 
-// 🔹 Connect MetaMask
 async function connectWallet() {
   if (window.ethereum) {
     provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     signer = provider.getSigner();
-
-    contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-
-    const address = await signer.getAddress();
-    document.getElementById("account").innerText =
-      "Connected: " + address;
+    contract = new ethers.Contract(contractAddress, contractABI, signer);
+    alert("Wallet connected");
   } else {
-    alert("MetaMask not found!");
+    alert("MetaMask not detected");
   }
 }
 
-// 🔹 Send message to blockchain
 async function setMessage() {
   const message = document.getElementById("messageInput").value;
-  if (!message) {
-    alert("Please write a message");
-    return;
-  }
+  const tx = await contract.setMessage(message);
+  await tx.wait();
+  alert("Message stored on blockchain");
+}
 
-  const tx = await contract.setMessa
+async function getMessage() {
+  const result = await contract.getMessage();
+  document.getElementById("output").innerText =
+    `Message: ${result[0]}\nSender: ${result[1]}`;
+}
