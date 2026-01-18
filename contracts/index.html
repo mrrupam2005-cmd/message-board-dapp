@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Message Board DApp</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+  <script defer src="script.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 40px;
+    }
+    .box {
+      background: #fff;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      border-radius: 8px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+    }
+    .info {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>📬 Message Board DApp</h2>
+
+    <button onclick="connectWallet()">🔗 Connect Wallet</button>
+
+    <input type="text" id="messageInput" placeholder="Enter your message" />
+    <button onclick="setMessage()">📨 Send Message</button>
+
+    <div class="info">
+      <p><strong>Latest Message:</strong> <span id="latestMessage">-</span></p>
+      <p><strong>Last Sender:</strong> <span id="lastSender">-</span></p>
+      <p><strong>Last Updated:</strong> <span id="lastUpdated">-</span></p>
+    </div>
+  </div>
+
+</body>
+</html>
